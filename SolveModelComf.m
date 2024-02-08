@@ -1,0 +1,9 @@
+function [T,X] = SolveModelComf(par,ic)
+
+    odeFunction = @(t,x) [x(2); ...
+        -2*par.zeta.*par.omega0.^(par.gamma).*t.^(par.gamma -1).*x(2)-...
+        par.omega0.^(2*par.gamma).*t.^(2*(par.gamma-1)).*x(1)+...
+        par.omega0.^(2*(par.gamma-1)).*t.^(2*(par.gamma-1)).*par.F0.*cos(par.omega*t)];
+
+    [T,X] = ode45(odeFunction,linspace(1e-12,par.tf,par.nt),[ic.x0 ic.v0]);
+end
